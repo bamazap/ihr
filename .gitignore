@@ -1,1 +1,6 @@
 db.php
+public/build
+node_modules
+vendor
+*.log
+
