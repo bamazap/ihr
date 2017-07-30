@@ -1,7 +1,7 @@
 import request from "request-promise-native";
 
 import php_crud_api_transform from
-  "../../vendor/mevdschee/php-crud-api/lib/php_crud_api_transform.js";
+  "../vendor/php_crud_api_transform.js";
 
 import { apiUrl } from "../constants.js"
 

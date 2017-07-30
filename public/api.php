@@ -1,7 +1,7 @@
 <?php
 
 require "../db.php"; // login credentials
-require "../vendor/mevdschee/php-crud-api/api.php";
+require "./vendor/php_crud_api.php";
 
 $api = new PHP_CRUD_API(array(
   "dbengine"=>"MySQL",
