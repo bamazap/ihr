@@ -1,11 +1,11 @@
-import { Component } from "react";
-import React from "react";
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import Services from "../services";
-import { filterInPlace } from "../constants.js"
+import { filterInPlace, mapReverse } from "../constants.js"
 
 
-export default class AddPeople extends Component {
+class AddPeople extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -114,7 +114,7 @@ export default class AddPeople extends Component {
           </div>
           <div className="row">
             {
-              this.state.people.map((person, i) => (
+              mapReverse(this.state.people, (person, i) => (
                 <div key={i}>
                   <span>{person.firstname} {person.lastname} </span>
                   <button onClick={() => this.handleDelete(person.id)}>
@@ -129,3 +129,5 @@ export default class AddPeople extends Component {
     )
   }
 }
+
+export default withRouter(AddPeople);
