@@ -2,15 +2,15 @@ import { Component } from "react";
 import React from "react";
 
 export default class NotFound extends Component {
-    constructor(props){
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render(){
-        return (
-            <div className="container">
-                <h1>404 <small>We could not find the route you were looking for...</small></h1>
-            </div>
-        )
-    }
+  render(){
+    return (
+      <div className="container">
+        <h1>404 - Not Found</h1>
+      </div>
+    )
+  }
 }
