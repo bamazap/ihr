@@ -19,22 +19,31 @@ class UserHome extends Component {
 
   componentWillMount() {
     Services.people.getPeople()
-      .then(res => this.setState(prevState => {
-        prevState.people = res;
-        return prevState;
-      }));
+      .then(res => {
+        res.forEach(person => person.vote = 0);
+        this.setState(prevState => {
+          prevState.people = res;
+          return prevState;
+        });
+      });
   }
 
   handleVote(personID, vote) {
-    Services.votes.updateVote(personID, vote)
-      .then(success => {
-        if (success) {
-          this.setState(prevState => {
-            // TODO
-            return prevState;
-          });
-        }
+    return () => {
+      // Services.votes.updateVote(personID, vote)
+      //   .then(success => {
+      //     if (success) {
+      //       this.setState(prevState => {
+      //         // TODO
+      //         return prevState;
+      //       });
+      //     }
+      //   });
+      this.setState(prevState => {
+        prevState.people.find(p => p.id === personID).vote += vote;
+        return prevState;
       });
+    }
   }
 
   handleChange(event) {
@@ -45,9 +54,14 @@ class UserHome extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      search: ""
+    });
   }
 
-  render(){
+  render() {
+    var prefix = this.state.search.toUpperCase();
+
     return (
       <div className="container">
         <div className="row">
@@ -64,6 +78,12 @@ class UserHome extends Component {
                 className="form-group"
                 style={{display:"flex"}}
               >
+                <button
+                  type="submit"
+                  className="btn btn-default btn-default"
+                >
+                  <span className="glyphicon glyphicon-remove"></span>
+                </button>
                 <label
                   htmlFor="search"
                   className="sr-only"
@@ -78,12 +98,6 @@ class UserHome extends Component {
                   placeholder="Search"
                   className="form-control"
                 />
-                <button
-                  type="submit"
-                  className="btn btn-default"
-                >
-                  <span className="glyphicon glyphicon-search"></span>
-                </button>
               </div>
             </form>
           </div>
@@ -92,16 +106,21 @@ class UserHome extends Component {
           <div className="col-xs-12">
             <ul className="list-group">
               {
-                this.state.people.map((person, i) => (
+                this.state.people
+                  .filter((person) => (
+                    person.firstname.toUpperCase().startsWith(prefix) ||
+                    person.lastname.toUpperCase().startsWith(prefix)
+                  ))
+                  .map((person, i) => (
                   <li key={i} className="list-group-item">
                     <span>{person.firstname} {person.lastname}</span>
                     <span className="pull-right">
-                      <button className="btn btn-xs">
+                      <button className="btn btn-xs" onClick={this.handleVote(person.id, -1)}>
                         <span className="glyphicon glyphicon-chevron-down">
                         </span>
                       </button>
-                      <span className="number-circle">2</span>
-                      <button className="btn btn-xs">
+                      <span className="number-circle">{person.vote}</span>
+                      <button className="btn btn-xs" onClick={this.handleVote(person.id, 1)}>
                         <span className="glyphicon glyphicon-chevron-up">
                         </span>
                       </button>
