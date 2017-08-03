@@ -1,3 +1,14 @@
+$icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.col-main {
+  @extend .col-xs-12;
+  @extend .col-sm-8;
+  @extend .col-sm-offset-2;
+  @extend .col-md-6;
+  @extend .col-md-offset-3;
+}
+
 .number-circle {
     border-radius: 50%;
 

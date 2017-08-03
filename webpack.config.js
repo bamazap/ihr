@@ -22,7 +22,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader"
       },
-			
+
 			// extracts CSS as separate output file
 			{
         test: /\.css$/,
@@ -33,7 +33,13 @@ module.exports = {
       {
         test: /\.(sass|scss)$/,
         loader: ExtractTextPlugin.extract(["css-loader", "sass-loader"])
-      }
+      },
+
+			// loads font icons for Bootstrap css
+			{
+					test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/,
+					loader: "file-loader"
+			}
 		]
 	},
   plugins: [
@@ -46,7 +52,7 @@ module.exports = {
 			port: 3000,
 			// proxy local php server
       proxy: "http://127.0.0.1:8000/",
-      //tunnel: true,
+      // tunnel: true,
       // watch the built files and the index file
       files: ["public/build/*", "public/index.html"],
     }),

@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import Services from "../services";
 import { filterInPlace, mapReverse } from "../constants.js"
 
+const MAX_VOTE = 2
+const MIN_VOTE = -2
 
 class UserHome extends Component {
   constructor(props){
@@ -40,7 +42,9 @@ class UserHome extends Component {
       //     }
       //   });
       this.setState(prevState => {
-        prevState.people.find(p => p.id === personID).vote += vote;
+        var person = prevState.people.find(p => p.id === personID);
+        person.vote += vote;
+        person.vote = Math.max(MIN_VOTE, Math.min(person.vote, MAX_VOTE));
         return prevState;
       });
     }
@@ -65,25 +69,19 @@ class UserHome extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-main">
             <h1 className="text-center">
               In House Rush
             </h1>
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-main">
             <form onSubmit={this.handleSubmit}>
               <div
                 className="form-group"
                 style={{display:"flex"}}
               >
-                <button
-                  type="submit"
-                  className="btn btn-default btn-default"
-                >
-                  <span className="glyphicon glyphicon-remove"></span>
-                </button>
                 <label
                   htmlFor="search"
                   className="sr-only"
@@ -98,12 +96,18 @@ class UserHome extends Component {
                   placeholder="Search"
                   className="form-control"
                 />
+                <button
+                  type="submit"
+                  className="btn btn-default btn-default"
+                >
+                  <span className="glyphicon glyphicon-remove"></span>
+                </button>
               </div>
             </form>
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-main">
             <ul className="list-group">
               {
                 this.state.people
@@ -115,12 +119,18 @@ class UserHome extends Component {
                   <li key={i} className="list-group-item">
                     <span>{person.firstname} {person.lastname}</span>
                     <span className="pull-right">
-                      <button className="btn btn-xs" onClick={this.handleVote(person.id, -1)}>
+                      <button
+                        className="btn btn-xs"
+                        onClick={this.handleVote(person.id, -1)}
+                      >
                         <span className="glyphicon glyphicon-chevron-down">
                         </span>
                       </button>
                       <span className="number-circle">{person.vote}</span>
-                      <button className="btn btn-xs" onClick={this.handleVote(person.id, 1)}>
+                      <button
+                        className="btn btn-xs"
+                        onClick={this.handleVote(person.id, 1)}
+                      >
                         <span className="glyphicon glyphicon-chevron-up">
                         </span>
                       </button>

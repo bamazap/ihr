@@ -73,12 +73,16 @@ class AddPeople extends Component {
     return (
       <div className="container">
         <div className="row">
-          <h1>Add a Person</h1>
+          <div className="col-main">
+            <h1 className="text-center">
+              Add a Person
+            </h1>
+          </div>
         </div>
         <div className="row">
-          <div className="col-xs-12">
-            <form onSubmit={this.handleSubmit} className="form-inline">
-              <div className="form-group">
+          <div className="col-main">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group" style={{display:"flex"}}>
                 <label htmlFor="firstname" className="sr-only">
                   First Name
                 </label>
@@ -91,8 +95,6 @@ class AddPeople extends Component {
                   placeholder="First Name"
                   ref={(input) => { this.firstnameInput = input; }}
                 />
-              </div>
-              <div className="form-group">
                 <label htmlFor="lastname" className="sr-only">
                   Last Name
                 </label>
@@ -104,25 +106,32 @@ class AddPeople extends Component {
                   className="form-control"
                   placeholder="Last Name"
                 />
+                <button
+                  type="submit"
+                  className="btn btn-default btn-default"
+                >
+                  <span className="glyphicon glyphicon-plus"></span>
+                </button>
               </div>
-              <input
-                type="submit"
-                value="+"
-                className="btn btn-default"
-              />
             </form>
           </div>
-          <div className="row">
-            {
-              mapReverse(this.state.people, (person, i) => (
-                <div key={i}>
-                  <span>{person.firstname} {person.lastname} </span>
-                  <button onClick={() => this.handleDelete(person.id)}>
-                    -
-                  </button>
-                </div>
-              ))
-            }
+        </div>
+        <div className="row">
+          <div className="col-main">
+            <ul className="list-group">
+              {
+                mapReverse(this.state.people, (person, i) => (
+                  <li key={i} className="list-group-item">
+                    <span>{person.firstname} {person.lastname} </span>
+                    <button
+                      className="pull-right"
+                      onClick={() => this.handleDelete(person.id)}>
+                      -
+                    </button>
+                  </li>
+                ))
+              }
+            </ul>
           </div>
         </div>
       </div>
