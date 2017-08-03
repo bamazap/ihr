@@ -10,15 +10,26 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 .number-circle {
-    border-radius: 50%;
+  display: inline-block;
+  border-radius: 50%;
 
-    width: 36px;
-    height: 36px;
-    padding: 8px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
 
-    background: #fff;
-    border: 2px solid #666;
-    margin: 0 5px;
-    color: #666;
-    text-align: center;
+  background: #fff;
+  border: 2px solid #666;
+  margin: 0 5px;
+  color: #666;
+  text-align: center;
+}
+
+li.person {
+  display: flex;
+  align-items: center;
+}
+
+li.person .person-name {
+  font-size: 18px;
+  flex-grow: 1;
 }

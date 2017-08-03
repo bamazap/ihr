@@ -121,10 +121,11 @@ class AddPeople extends Component {
             <ul className="list-group">
               {
                 mapReverse(this.state.people, (person, i) => (
-                  <li key={i} className="list-group-item">
-                    <span>{person.firstname} {person.lastname} </span>
+                  <li key={i} className="list-group-item person">
+                    <span className="person-name">
+                      {person.firstname} {person.lastname}
+                    </span>
                     <button
-                      className="pull-right"
                       onClick={() => this.handleDelete(person.id)}>
                       -
                     </button>

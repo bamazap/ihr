@@ -65,6 +65,14 @@ class UserHome extends Component {
 
   render() {
     var prefix = this.state.search.toUpperCase();
+    var sign = function(n) {
+      if (n > 0) {
+        return "+";
+      } else if (n === 0) {
+        return "±";
+      }
+    }
+
 
     return (
       <div className="container">
@@ -116,8 +124,13 @@ class UserHome extends Component {
                     person.lastname.toUpperCase().startsWith(prefix)
                   ))
                   .map((person, i) => (
-                  <li key={i} className="list-group-item">
-                    <span>{person.firstname} {person.lastname}</span>
+                  <li
+                    key={i}
+                    className="list-group-item person"
+                  >
+                    <span className="person-name">
+                      {person.firstname} {person.lastname}
+                    </span>
                     <span className="pull-right">
                       <button
                         className="btn btn-xs"
@@ -126,7 +139,9 @@ class UserHome extends Component {
                         <span className="glyphicon glyphicon-chevron-down">
                         </span>
                       </button>
-                      <span className="number-circle">{person.vote}</span>
+                      <span className="number-circle">
+                        {sign(person.vote)}{person.vote}
+                      </span>
                       <button
                         className="btn btn-xs"
                         onClick={this.handleVote(person.id, 1)}
