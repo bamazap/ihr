@@ -29,7 +29,12 @@ li.person {
   align-items: center;
 }
 
-li.person .person-name {
+.person-name {
   font-size: 18px;
   flex-grow: 1;
+}
+
+.search-bar {
+  background-color: #ffffff;
+  border: none;
 }
