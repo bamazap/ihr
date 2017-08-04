@@ -23,7 +23,7 @@ $api = new PHP_CRUD_API(array(
   "hostname" => $hostname,
   "charset" => "utf8",
   "table_authorizer" => function($cmd, $db, $tab) {
-    return !empty($_SESSION['user']);
+    return !empty($_SESSION['user']) || true;
   }
 ));
 $api->executeCommand();

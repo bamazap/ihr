@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import Services from "../services";
 import { filterInPlace, mapReverse } from "../constants.js"
 
+import Vote from "./Vote.jsx";
+
 const MAX_VOTE = 2
 const MIN_VOTE = -2
 
@@ -31,19 +33,10 @@ class UserHome extends Component {
       });
   }
 
-  handleVote(personID, vote) {
+  handleVote(person, vote) {
     return () => {
-      // Services.votes.updateVote(personID, vote)
-      //   .then(success => {
-      //     if (success) {
-      //       this.setState(prevState => {
-      //         // TODO
-      //         return prevState;
-      //       });
-      //     }
-      //   });
+      // TODO: put to backend
       this.setState(prevState => {
-        var person = prevState.people.find(p => p.id === personID);
         person.vote += vote;
         person.vote = Math.max(MIN_VOTE, Math.min(person.vote, MAX_VOTE));
         return prevState;
@@ -76,17 +69,10 @@ class UserHome extends Component {
 
   render() {
     var prefix = this.state.search.toUpperCase();
-    var sign = function(n) {
-      if (n > 0) {
-        return "+";
-      } else if (n === 0) {
-        return "±";
-      }
-    }
 
     return (
       <div>
-        <nav className="navbar navbar-fixed-top search-bar" id="stick-top">
+        <div className="search-bar navbar-fixed-top" id="stick-top">
           <div className="container">
             <div className="row">
               <div className="col-main">
@@ -121,7 +107,7 @@ class UserHome extends Component {
               </div>
             </div>
           </div>
-        </nav>
+        </div>
         {this.state.searchBarHeight && (
           <div
             className="container"
@@ -145,23 +131,7 @@ class UserHome extends Component {
                           {person.firstname} {person.lastname}
                         </span>
                         <span className="pull-right">
-                          <button
-                            className="btn btn-xs"
-                            onClick={this.handleVote(person.id, -1)}
-                          >
-                            <span className="glyphicon glyphicon-chevron-down">
-                            </span>
-                          </button>
-                          <span className="number-circle">
-                            {sign(person.vote)}{person.vote}
-                          </span>
-                          <button
-                            className="btn btn-xs"
-                            onClick={this.handleVote(person.id, 1)}
-                          >
-                            <span className="glyphicon glyphicon-chevron-up">
-                            </span>
-                          </button>
+                          <Vote handleVote={this.handleVote} person={person} />
                         </span>
                       </li>
                     ))
