@@ -5,6 +5,7 @@ import Services from "../services";
 import { filterInPlace, mapReverse } from "../constants.js"
 
 import Vote from "./Vote.jsx";
+import PersonList from "./PersonList.jsx";
 
 const MAX_VOTE = 2
 const MIN_VOTE = -2
@@ -68,7 +69,11 @@ class UserHome extends Component {
   }
 
   render() {
-    var prefix = this.state.search.toUpperCase();
+    var query = this.state.search.toUpperCase();
+    var searchFilter = (person) => (
+      person.firstname.toUpperCase().startsWith(query) ||
+      person.lastname.toUpperCase().startsWith(query)
+    );
 
     return (
       <div>
@@ -115,28 +120,9 @@ class UserHome extends Component {
           >
             <div className="row">
               <div className="col-main">
-                <ul className="list-group">
-                  {
-                    this.state.people
-                      .filter((person) => (
-                        person.firstname.toUpperCase().startsWith(prefix) ||
-                        person.lastname.toUpperCase().startsWith(prefix)
-                      ))
-                      .map((person, i) => (
-                      <li
-                        key={i}
-                        className="list-group-item person"
-                      >
-                        <span className="person-name">
-                          {person.firstname} {person.lastname}
-                        </span>
-                        <span className="pull-right">
-                          <Vote handleVote={this.handleVote} person={person} />
-                        </span>
-                      </li>
-                    ))
-                  }
-                </ul>
+                <PersonList people={this.state.people.filter(searchFilter)}>
+                  <Vote handleVote={this.handleVote} />
+                </PersonList>
               </div>
             </div>
           </div>
