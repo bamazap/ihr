@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-
 
 export default class Vote extends Component {
   constructor(props) {
@@ -15,7 +13,7 @@ export default class Vote extends Component {
         return "±";
       }
     }
-    
+
     return (
       <div>
         <button

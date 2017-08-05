@@ -7,10 +7,10 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Login from "./components/Login.jsx";
-import AddPeople from "./components/AddPeople.jsx";
-import NotFound from "./components/NotFound.jsx";
-import UserHome from "./components/UserHome.jsx";
+import Login from "./components/pages/Login.jsx";
+import AddPeople from "./components/pages/AddPeople.jsx";
+import NotFound from "./components/pages/NotFound.jsx";
+import UserHome from "./components/pages/UserHome.jsx";
 
 export default (
   <Router>
