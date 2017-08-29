@@ -30,6 +30,8 @@ export default {
     });
   },
 
+  // These ended up being the same, but this may change if backend changes
+
   // gets all the votes from the database by the logged-in user
   // result: array of votes (objects with id, personID, username, value)
   getVotesByUser: () => {
@@ -48,9 +50,6 @@ export default {
       uri: apiUrl + "/votes",
       method: "GET",
       json: true,
-      body: {
-        username: "*"
-      },
       transform: (res) => php_crud_api_transform(res)["votes"]
     });
   }
