@@ -15,8 +15,8 @@ import UserHome from "./components/pages/UserHome.jsx";
 export default (
   <Router>
     <Switch>
+      <Route exact path="/" component={Login}/>
       <Route exact path="/home" component={UserHome}/>
-      <Route exact path="/login" component={Login}/>
       <Route exact path="/add-people" component={AddPeople}/>
       <Route component={NotFound}/>
     </Switch>

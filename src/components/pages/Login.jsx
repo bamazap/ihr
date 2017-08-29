@@ -8,8 +8,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      kerberos: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,49 +23,53 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    Services.accounts.login(this.state.username, this.state.password)
+    Services.accounts.login(this.state.kerberos)
       .then(res => {
-        this.props.history.push("add-people");
+        if (this.state.kerberos === "d-entry") {
+          this.props.history.push("add-people");
+        } else {
+          this.props.history.push("home");
+        }
       });
   }
 
   render() {
     return (
       <div className="container">
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username" className="sr-only">
-              Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleChange}
-              className="form-control"
-              placeholder="Username"
-            />
+        <div className="row">
+          <div className="col-main">
+            <h1 className="text-center">
+              D-Entry In House Rush 2017
+            </h1>
           </div>
-          <div className="form-group">
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              className="form-control"
-              placeholder="Password"
-            />
+        </div>
+        <div className="row">
+          <div className="col-main">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="kerberos" className="sr-only">
+                  Kerberos
+                </label>
+                <input
+                  type="text"
+                  name="kerberos"
+                  value={this.state.kerberos}
+                  onChange={this.handleChange}
+                  className="form-control"
+                  placeholder="Kerberos"
+                />
+              </div>
+              <div className="form-group">
+                <button
+                  type="submit"
+                  className="btn btn-default btn-default pull-right"
+                >
+                  Sign In
+                </button>
+              </div>
+            </form>
           </div>
-          <input
-            type="submit"
-            value="Login"
-            className="btn btn-default"
-          />
-        </form>
+        </div>
       </div>
     );
   }

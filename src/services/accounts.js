@@ -4,14 +4,29 @@ import { apiUrl } from "../constants.js"
 
 export default {
 
-  login: (username, password) => {
+  // both username and password fields are required
+  // but only username is used
+
+  login: (kerberos) => {
     return request({
       uri: apiUrl + "/",
       method: "POST",
       json: true,
       body: {
-        username: username,
-        password: password
+        username: kerberos,
+        password: "password"
+      }
+    });
+  },
+
+  logout: () => {
+    return request({
+      uri: apiUrl + "/",
+      method: "POST",
+      json: true,
+      body: {
+        username: "",
+        password: "password"
       }
     });
   }

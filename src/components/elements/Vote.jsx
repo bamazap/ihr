@@ -24,7 +24,7 @@ export default class Vote extends Component {
           </span>
         </button>
         <span className="number-circle">
-          {sign(this.props.person.vote)}{this.props.person.vote}
+          {sign(this.props.person.vote.value)}{this.props.person.vote.value}
         </span>
         <button
           className="btn btn-xs"

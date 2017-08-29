@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Services from "../../services";
-import { filterInPlace, mapReverse } from "../../constants.js"
+import { filterInPlace } from "../../constants.js"
 
 import Vote from "../elements/Vote.jsx";
 import PersonList from "../elements/PersonList.jsx";
 
 
+// Update in the back end if you change this.
 const MAX_VOTE = 2
 const MIN_VOTE = -2
 
@@ -19,11 +20,38 @@ export default class PeopleForUser extends Component {
   }
 
   componentWillMount() {
-    Services.people.getPeople()
-      .then(res => {
-        res.forEach(person => person.vote = 0); // TODO: votes from backend
+    Promise.all([
+      Services.people.getPeople(),
+      Services.votes.getVotesByUser()
+    ])
+      // add votes to people
+      .then(arr => {
+        // TODO: I swear there is shorthand for this
+        const people = arr[0];
+        const votes = arr[1];
+        const newPeople = []; // track people that didn't have votes
+        people.forEach(person => {
+          // this is O(n^2) -- we can do better -- but do we care?
+          let vote = votes.find((vote) => vote.person == person.id);
+          if (vote === undefined) {
+            newPeople.push(person);
+          }
+          person["vote"] = vote;
+        })
+        if (newPeople.length) {
+          return Services.votes.createVotes(newPeople.map(person => person.id))
+            .then(voteIDs => {
+              voteIDs.forEach((id, i) => {
+                newPeople[i].vote = {id: id, value: 0};
+              });
+              return people;
+            });
+        }
+        return people;
+      })
+      .then(people => {
         this.setState(prevState => {
-          prevState.people = res;
+          prevState.people = people;
           return prevState;
         });
       });
@@ -31,12 +59,17 @@ export default class PeopleForUser extends Component {
 
   handleVote(person, vote) {
     return () => {
-      // TODO: put to backend
-      this.setState(prevState => {
-        person.vote += vote;
-        person.vote = Math.max(MIN_VOTE, Math.min(person.vote, MAX_VOTE));
-        return prevState;
-      });
+      let newValue = person.vote.value + vote;
+      newValue = Math.max(MIN_VOTE, Math.min(newValue, MAX_VOTE));
+      Services.votes.updateVote(person.vote.id, newValue)
+        .then(success => {
+          if (success) {
+            this.setState(prevState => {
+              person.vote.value = newValue;
+              return prevState;
+            });
+          }
+        });
     }
   }
 
