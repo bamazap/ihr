@@ -1,7 +1,7 @@
 "use strict";
 
 // uri for API calls
-export var apiUrl = window.location.origin + "/api.php";
+export var apiUrl = window.location.origin + "/api";
 
 export function filterInPlace(arr, f) {
   var out = 0;

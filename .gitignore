@@ -1,4 +1,4 @@
-db.php
+db.js
 public/build
 node_modules
 *.log

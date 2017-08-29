@@ -4,7 +4,7 @@
   "description": "Web Application to support In House Rush",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "php -S 127.0.0.1:8000 -t public/",
+    "dev": "node app.js",
     "start": "npm run dev & webpack --watch",
     "build": "NODE_ENV=production webpack -p --config ./webpack-production-config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/bamazap/ihr#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mysql": "^2.14.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "^4.1.2",

@@ -1,7 +1,5 @@
 import request from "request-promise-native";
 
-import php_crud_api_transform from "../vendor/php_crud_api_transform.js";
-
 import { apiUrl } from "../constants.js"
 
 export default {
@@ -16,7 +14,8 @@ export default {
       body: {
         firstname: firstname,
         lastname: lastname
-      }
+      },
+      transform: (res) => res.content
     });
   },
 
@@ -26,7 +25,8 @@ export default {
     return request({
       uri: apiUrl + "/people/" + id,
       method: "DELETE",
-      json: true
+      json: true,
+      transform: (res) => res.content
     });
   },
 
@@ -37,7 +37,7 @@ export default {
       uri: apiUrl + "/people",
       method: "GET",
       json: true,
-      transform: (res) => php_crud_api_transform(res)["people"]
+      transform: (res) => res.content
     });
   }
 }

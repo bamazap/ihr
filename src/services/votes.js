@@ -1,7 +1,5 @@
 import request from "request-promise-native";
 
-import php_crud_api_transform from "../vendor/php_crud_api_transform.js";
-
 import { apiUrl } from "../constants.js"
 
 export default {
@@ -13,7 +11,8 @@ export default {
       uri: apiUrl + "/votes",
       method: "POST",
       json: true,
-      body: personIDs.map(id => { return {person: id, username: "barryam3"};})
+      body: personIDs.map(id => { return {person: id, username: "barryam3"};}),
+      transform: (res) => res.content
     });
   },
 
@@ -26,7 +25,8 @@ export default {
       json: true,
       body: {
         value: value
-      }
+      },
+      transform: (res) => res.content
     });
   },
 
@@ -39,7 +39,7 @@ export default {
       uri: apiUrl + "/votes",
       method: "GET",
       json: true,
-      transform: (res) => php_crud_api_transform(res)["votes"]
+      transform: (res) => res.content
     });
   },
 
@@ -50,7 +50,7 @@ export default {
       uri: apiUrl + "/votes",
       method: "GET",
       json: true,
-      transform: (res) => php_crud_api_transform(res)["votes"]
+      transform: (res) => res.content
     });
   }
 }

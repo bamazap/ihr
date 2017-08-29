@@ -30,6 +30,7 @@ export default class PeopleForUser extends Component {
         const people = arr[0];
         const votes = arr[1];
         const newPeople = []; // track people that didn't have votes
+        console.log(JSON.stringify(people));
         people.forEach(person => {
           // this is O(n^2) -- we can do better -- but do we care?
           let vote = votes.find((vote) => vote.person == person.id);
