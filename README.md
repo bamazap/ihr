@@ -14,5 +14,5 @@ To configure mysql:
     CREATE DATABASE `ihr`;  
     USE `ihr`;
     CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, firstname CHAR(25), lastname CHAR(25));
-    CREATE TABLE votes (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, user CHAR(8), person INT NON NULL, value INT NON NULL);
+    CREATE TABLE votes (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, user CHAR(8), person INT, value INT);
 

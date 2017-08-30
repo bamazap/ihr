@@ -25,11 +25,7 @@ class Login extends Component {
     event.preventDefault();
     Services.accounts.login(this.state.kerberos)
       .then(res => {
-        if (this.state.kerberos === "d-entry") {
-          this.props.history.push("add-people");
-        } else {
-          this.props.history.push("home");
-        }
+        this.props.history.push("home");
       });
   }
 

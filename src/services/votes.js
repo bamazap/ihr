@@ -11,16 +11,16 @@ export default {
       uri: apiUrl + "/votes",
       method: "POST",
       json: true,
-      body: personIDs.map(id => { return {person: id, username: "barryam3"};}),
+      body: personIDs,
       transform: (res) => res.content
     });
   },
 
   // adds or updates a vote by a user on a person
   // result: true if successful, false otherwise
-  updateVote: (voteID, value) => {
+  updateVote: (personID, value) => {
     return request({
-      uri: apiUrl + "/votes/" + voteID,
+      uri: apiUrl + "/votes/" + personID,
       method: "PUT",
       json: true,
       body: {
@@ -29,8 +29,6 @@ export default {
       transform: (res) => res.content
     });
   },
-
-  // These ended up being the same, but this may change if backend changes
 
   // gets all the votes from the database by the logged-in user
   // result: array of votes (objects with id, personID, username, value)
@@ -47,7 +45,7 @@ export default {
   // result: array of votes (objects with id, personID, username, value)
   getAllVotes: () => {
     return request({
-      uri: apiUrl + "/votes",
+      uri: apiUrl + "/votes/all",
       method: "GET",
       json: true,
       transform: (res) => res.content

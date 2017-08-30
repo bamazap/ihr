@@ -30,7 +30,6 @@ export default class PeopleForUser extends Component {
         const people = arr[0];
         const votes = arr[1];
         const newPeople = []; // track people that didn't have votes
-        console.log(JSON.stringify(people));
         people.forEach(person => {
           // this is O(n^2) -- we can do better -- but do we care?
           let vote = votes.find((vote) => vote.person == person.id);
@@ -62,7 +61,7 @@ export default class PeopleForUser extends Component {
     return () => {
       let newValue = person.vote.value + vote;
       newValue = Math.max(MIN_VOTE, Math.min(newValue, MAX_VOTE));
-      Services.votes.updateVote(person.vote.id, newValue)
+      Services.votes.updateVote(person.id, newValue)
         .then(success => {
           if (success) {
             this.setState(prevState => {

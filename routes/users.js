@@ -8,7 +8,6 @@ module.exports = function(connection) {
   router.post('/', function(req, res) {
     const username = req.body.username;
     const legalUsernames = [
-      "d-entry",
       "barryam3",
       "andytsai"
     ]
