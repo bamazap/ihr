@@ -30,7 +30,7 @@ module.exports = function(connection) {
   // GET /votes/all
   router.get('/all', function(req, res) {
     sql = "SELECT * FROM votes;";
-    connection.query(sql, req.session.user, function (err, rows, fields) {
+    connection.query(sql, function (err, rows, fields) {
       if (err) {
         utils.sendErrorResponse(res, 500, err);
       } else {
