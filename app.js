@@ -39,8 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var sessionStore = new MySQLStore({}, connection);
 app.use(session({
-  //key: "session_cookie_name",
-  cookie: {maxAge: 60000},
+  key: "session_cookie_name",
   secret: "session_cookie_secret",
   store: sessionStore,
   resave: false,

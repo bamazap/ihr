@@ -19,6 +19,7 @@ module.exports = function(connection) {
       req.session.user = "";
       utils.sendErrorResponse(res, 403, "Invalid username.");
     }
+    req.session.save();
   });
 
   return router;

@@ -3,7 +3,7 @@ var router = express.Router();
 var utils = require('../utils/utils');
 
 var requireAuthentication = function(req, res, next) {
-  if (!req.currentUser) {
+  if (!req.session.user) {
     utils.sendErrorResponse(res, 403, 'Not logged in.');
   } else {
     next();
@@ -12,7 +12,7 @@ var requireAuthentication = function(req, res, next) {
 
 module.exports = function(connection) {
   router.all('*', requireAuthentication);
-  
+
   // Get people
   // GET /people
   router.get('/', function(req, res) {
