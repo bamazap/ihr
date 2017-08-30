@@ -12,6 +12,7 @@ export default class SearchBar extends Component {
   }
 
   handleSubmit(event) {
+    this.props.updateSearch("");
     event.preventDefault();
   }
 
