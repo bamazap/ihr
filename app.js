@@ -17,28 +17,11 @@ try {
   };
 }
 
-var connection;
-function handleDisconnect() {
-  connection = mysql.createConnection(credentials);
-
-  connection.connect(function(err) {
-    if (err) {
-      console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000);
-    }
-  });
-
-  connection.on('error', function(err) {
-    console.log('db error', err);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.log('handling disconnect');
-      handleDisconnect();
-    } else {
-      throw err;
-    }
-  });
-}
-handleDisconnect();
+var connection = mysql.createConnection(credentials);
+// keep the connection alive
+setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
 
 // Require routes
 var users = require('./routes/users')(connection);
