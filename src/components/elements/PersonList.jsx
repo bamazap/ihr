@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import Comment from "./Comment.jsx";
+
 export default class PersonList extends Component {
   constructor(props) {
     super(props);
@@ -27,13 +29,11 @@ export default class PersonList extends Component {
                   }
                 </span>
               </div>
-              <div style={{width: "100%"}}>
-                <input
-                  type="text"
-                  placeholder="Comment"
-                  className="comment"
-                />
-              </div>
+              {this.props.comments && (
+                <div style={{width: "100%"}}>
+                  <Comment person={person} />
+                </div>
+              )}
             </li>
           ))
         }

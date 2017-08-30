@@ -43,20 +43,7 @@ handleDisconnect();
 var users = require('./routes/users')(connection);
 var people = require('./routes/people')(connection);
 var votes = require('./routes/votes')(connection);
-
-/**
- * Require authentication.
- * Checks if req.currentUser is set and sends an error if it is not.
- */
-var requireAuthentication = function(req, res, next) {
-  if (!req.currentUser) {
-    utils.sendErrorResponse(res, 403, 'Not logged in.');
-  } else {
-    next();
-  }
-};
-people.all('*', requireAuthentication);
-votes.all('*', requireAuthentication);
+var comments = require('./routes/comments')(connection);
 
 // Express
 var app = express();
@@ -78,6 +65,7 @@ app.use(session({
 app.use('/api/users', users);
 app.use('/api/people', people);
 app.use('/api/votes', votes);
+app.use('/api/comments', comments);
 
 // Static file routes
 app.use('/build', express.static(path.join(__dirname, 'public/build')));

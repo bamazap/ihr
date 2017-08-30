@@ -26,23 +26,10 @@ module.exports = function(connection) {
     });
   });
 
-  // Get all comments
-  // GET /comments/all
-  router.get('/all', function(req, res) {
-    sql = "SELECT * FROM comments;";
-    connection.query(sql, req.session.user, function (err, rows, fields) {
-      if (err) {
-        utils.sendErrorResponse(res, 500, err);
-      } else {
-        utils.sendSuccessResponse(res, rows);
-      }
-    });
-  });
-
   // Create comments on people for active user
   // POST /comments
   router.post('/', function(req, res) {
-    const values = req.body.map(personID => [req.session.user, personID, 0]); //text
+    const values = req.body.map(personID => [req.session.user, personID, ""]);
     const sql = "INSERT INTO comments (user, person, text) VALUES ?;";
     if (values.length) connection.query(sql, [values], function(err, result) {
       if (err) {

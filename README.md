@@ -15,4 +15,4 @@ To configure mysql:
     USE `ihr`;
     CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, firstname CHAR(25), lastname CHAR(25));
     CREATE TABLE votes (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, user CHAR(8), person INT, value INT);
-
+    CREATE TABLE comments (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, user CHAR(8), person INT, text TEXT);
