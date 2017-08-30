@@ -12,7 +12,8 @@ module.exports = function(connection) {
       "andytsai",
       "jcwilson",
       "kontomah",
-      "mladenik"
+      "mladenik",
+      "jannycai"
     ]
     if (legalUsernames.indexOf(username) >= 0) {
       req.session.user = username;
