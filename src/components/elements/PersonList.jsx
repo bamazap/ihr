@@ -15,16 +15,25 @@ export default class PersonList extends Component {
               key={i}
               className="list-group-item person"
             >
-              <span className="person-name">
-                {person.firstname} {person.lastname}
-              </span>
-              <span className="pull-right">
-                {
-                  React.Children.map(this.props.children, (child) =>
-                    React.cloneElement(child, {person: person})
-                  )
-                }
-              </span>
+              <div style={{width: "100%", display: "flex"}}>
+                <span className="person-name">
+                  {person.firstname} {person.lastname}
+                </span>
+                <span className="pull-right">
+                  {
+                    React.Children.map(this.props.children, (child) =>
+                      React.cloneElement(child, {person: person})
+                    )
+                  }
+                </span>
+              </div>
+              <div style={{width: "100%"}}>
+                <input
+                  type="text"
+                  placeholder="Comment"
+                  className="comment"
+                />
+              </div>
             </li>
           ))
         }

@@ -25,7 +25,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 li.person {
-  display: flex;
   align-items: center;
 }
 
@@ -36,4 +35,8 @@ li.person {
 
 .top-bar {
   background-color: #ffffff;
+}
+
+.comment {
+  width: 100%;
 }
