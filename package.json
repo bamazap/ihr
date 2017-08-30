@@ -1,6 +1,9 @@
 {
   "name": "ihr",
   "version": "1.0.0",
+  "engines": {
+      "node": "6.11.1"
+  },
   "description": "Web Application to support In House Rush",
   "main": "webpack.config.js",
   "scripts": {
