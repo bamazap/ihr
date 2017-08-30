@@ -3,13 +3,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-// only used in production
-try {
-  var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
-} catch (err) {
-  var BrowserSyncPlugin = null;
-}
+var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 var config = {
 	entry: [
@@ -55,8 +49,20 @@ var config = {
     // set node env to development
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
+    }),
+
+    // hot reload
+    new BrowserSyncPlugin({
+      host: "127.0.0.1",
+      port: 3000,
+      // proxy local php server
+      proxy: "http://127.0.0.1:8000/",
+      // tunnel: true,
+      // watch the built files and the index file
+      files: ["public/build/*", "public/index.html"],
     })
   ],
+
 	// needed to make request-promise work
 	node: {
 		fs: "empty",
@@ -64,16 +70,5 @@ var config = {
 		tls: "empty"
 	}
 };
-
-// reloads browser when the watched files change
-if (BrowserSyncPlugin) config.plugins.push(new BrowserSyncPlugin({
-  host: "127.0.0.1",
-  port: 3000,
-  // proxy local php server
-  proxy: "http://127.0.0.1:8000/",
-  // tunnel: true,
-  // watch the built files and the index file
-  files: ["public/build/*", "public/index.html"],
-}));
 
 module.exports = config;
