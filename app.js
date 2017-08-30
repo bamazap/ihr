@@ -16,9 +16,27 @@ try {
     database: process.env.MYSQL_DB
   };
 }
-var connection = mysql.createConnection(credentials);
 
-connection.connect()
+var connection;
+function handleDisconnect() {
+  connection = mysql.createConnection(credentials);
+
+  connection.connect(function(err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST')
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+handleDisconnect();
 
 // Require routes
 var users = require('./routes/users')(connection);
