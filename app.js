@@ -6,7 +6,16 @@ var MySQLStore = require('express-mysql-session')(session);
 
 // Database
 var mysql = require('mysql');
-var credentials = require('./db.js'); // {host, user, password, database}
+try {
+  var credentials = require('./db.js');
+} catch (err){
+  var credentials = {
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PW,
+    database: process.env.MYSQL_DB
+  };
+}
 var connection = mysql.createConnection(credentials);
 
 connection.connect()
@@ -59,7 +68,7 @@ app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.set('port', 8000);
+app.set('port', process.env.port || 8000);
 app.listen(app.get('port'), function() {
     console.log('Node App Started');
 });
