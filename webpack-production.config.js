@@ -4,10 +4,10 @@ var webpack = require("webpack");
 var webpackConfig = require("./webpack.config.js");
 
 // strip out console.log statements
-webpackConfig.module.loaders.push({
+webpackConfig.module.rules.push({
 	test: /\.jsx?$/,
 	exclude: /node_modules/,
-	loader: "strip?strip[]=console.log!babel"
+	loader: "webpack-strip?strip[]=console.log!babel-loader"
 });
 
 // set node env to production

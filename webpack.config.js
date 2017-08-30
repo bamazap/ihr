@@ -3,9 +3,15 @@
 var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
-module.exports = {
+// only used in production
+try {
+  var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+} catch (err) {
+  var BrowserSyncPlugin = null;
+}
+
+var config = {
 	entry: [
 		path.join(__dirname, "src/main.js"),
 		path.join(__dirname, "src/styles/main.scss")
@@ -46,18 +52,7 @@ module.exports = {
     // output a separate css bundle
     new ExtractTextPlugin("bundle.css"),
 
-    // reloads browser when the watched files change
-    new BrowserSyncPlugin({
-			host: "127.0.0.1",
-			port: 3000,
-			// proxy local php server
-      proxy: "http://127.0.0.1:8000/",
-      // tunnel: true,
-      // watch the built files and the index file
-      files: ["public/build/*", "public/index.html"],
-    }),
-
-    // set node env
+    // set node env to development
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
     })
@@ -69,3 +64,16 @@ module.exports = {
 		tls: "empty"
 	}
 };
+
+// reloads browser when the watched files change
+if (BrowserSyncPlugin) config.plugins.push(new BrowserSyncPlugin({
+  host: "127.0.0.1",
+  port: 3000,
+  // proxy local php server
+  proxy: "http://127.0.0.1:8000/",
+  // tunnel: true,
+  // watch the built files and the index file
+  files: ["public/build/*", "public/index.html"],
+}));
+
+module.exports = config;
