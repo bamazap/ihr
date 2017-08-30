@@ -9,7 +9,10 @@ module.exports = function(connection) {
     const username = req.body.username;
     const legalUsernames = [
       "barryam3",
-      "andytsai"
+      "andytsai",
+      "jcwilson",
+      "kontomah",
+      "mladenik"
     ]
     if (legalUsernames.indexOf(username) >= 0) {
       req.session.user = username;
