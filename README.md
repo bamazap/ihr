@@ -1,4 +1,4 @@
-chrome# In House Rush
+# In House Rush
 
 ## Stack
 MySQL database  
