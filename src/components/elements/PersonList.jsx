@@ -14,7 +14,7 @@ export default class PersonList extends Component {
           this.props.people
             .map((person, i) => (
             <li
-              key={i}
+              key={person.id}
               className="list-group-item person"
             >
               <div style={{width: "100%", display: "flex"}}>
