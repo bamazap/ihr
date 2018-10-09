@@ -1,4 +1,5 @@
-db.js
+db.json
+db.*.json
 public/build
 node_modules
 *.log

@@ -24,7 +24,10 @@ While I had been thinking about this project for a while and began it over the s
 ## Getting started
 `npm install`  
 You need to add a file `db.php` in your root directory or set environment variables with your database login info.
-`npm start`
+`npm start` in one terminal  
+`npm run dev` in another
+
+Do `npm run lint` before commiting.  
 
 To configure mysql:  
     CREATE DATABASE `ihr`;  
