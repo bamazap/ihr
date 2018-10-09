@@ -1,18 +1,16 @@
-import request from "request-promise-native";
+import request from 'request-promise-native';
 
-import { apiUrl } from "../constants.js"
+import { apiUrl } from '../constants';
 
 export default {
 
-  login: (kerberos) => {
-    return request({
-      uri: apiUrl + "/users",
-      method: "POST",
-      json: true,
-      body: {
-        username: kerberos
-      }
-    });
-  }
+  login: kerberos => request({
+    uri: `${apiUrl}/users`,
+    method: 'POST',
+    json: true,
+    body: {
+      username: kerberos,
+    },
+  }),
 
-}
+};

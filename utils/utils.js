@@ -5,19 +5,18 @@
 // (error code, message, etc.).
 //
 // Used verbatim from the notes app. Many thanks and appreciates.
-var utils = (function() {
-
-  var _utils = {};
+module.exports = (() => {
+  const utils = {};
 
   /*
     Send a 200 OK with success:true in the request body to the
     response argument provided.
     The caller of this function should return after calling
   */
-  _utils.sendErrorResponse = function(res, errorCode, error) {
+  utils.sendErrorResponse = (res, errorCode, error) => {
     res.status(errorCode).json({
       success: false,
-      err: error
+      err: error,
     }).end();
   };
 
@@ -26,16 +25,13 @@ var utils = (function() {
     as provided in the arguments to the response argument provided.
     The caller of this function should return after calling
   */
-  _utils.sendSuccessResponse = function(res, content) {
+  utils.sendSuccessResponse = (res, content) => {
     res.status(200).json({
       success: true,
-      content: content
+      content,
     }).end();
   };
 
-  Object.freeze(_utils);
-  return _utils;
-
+  Object.freeze(utils);
+  return utils;
 })();
-
-module.exports = utils;

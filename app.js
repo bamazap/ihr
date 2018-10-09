@@ -1,49 +1,50 @@
-var express = require('express');
-var session = require('express-session');
-var path = require('path');
-var bodyParser = require('body-parser');
-var MySQLStore = require('express-mysql-session')(session);
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const MySQLStore = require('express-mysql-session')(session);
+const mysql = require('mysql');
 
-// Database
-var mysql = require('mysql');
+let credentials;
 try {
-  var credentials = require('./db.js');
-} catch (err){
-  var credentials = {
+  credentials = JSON.parse(fs.readFileSync(path.join(__dirname, 'db.json'), { encoding: 'utf8' }));
+} catch (err) {
+  credentials = {
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PW,
-    database: process.env.MYSQL_DB
+    database: process.env.MYSQL_DB,
   };
 }
 
-var connection = mysql.createConnection(credentials);
+const connection = mysql.createConnection(credentials);
 // keep the connection alive
-setInterval(function () {
-    connection.query('SELECT 1');
+setInterval(() => {
+  connection.query('SELECT 1');
 }, 5000);
 
 // Require routes
-var users = require('./routes/users')(connection);
-var people = require('./routes/people')(connection);
-var votes = require('./routes/votes')(connection);
-var comments = require('./routes/comments')(connection);
+const users = require('./routes/users')(connection);
+const people = require('./routes/people')(connection);
+const votes = require('./routes/votes')(connection);
+const comments = require('./routes/comments')(connection);
 
 // Express
-var app = express();
+const app = express();
 
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var sessionStore = new MySQLStore({}, connection);
+const sessionStore = new MySQLStore({}, connection);
 app.use(session({
-  key: "session_cookie_name",
-  secret: "session_cookie_secret",
+  key: 'session_cookie_name',
+  secret: 'session_cookie_secret',
   store: sessionStore,
   resave: false,
-  saveUninitialized: false
-}))
+  saveUninitialized: false,
+}));
 
 // API Routes
 app.use('/api/users', users);
@@ -55,11 +56,11 @@ app.use('/api/comments', comments);
 app.use('/build', express.static(path.join(__dirname, 'public/build')));
 
 // Always host index.html
-app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.set('port', process.env.PORT || 8000);
-app.listen(app.get('port'), function() {
-    console.log('Node App Started');
+app.listen(app.get('port'), () => {
+  console.log('Node App Started'); // eslint-disable-line no-console
 });

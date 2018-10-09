@@ -1,23 +1,24 @@
-var express = require('express');
-var router = express.Router();
-var utils = require('../utils/utils');
+const express = require('express');
 
-var requireAuthentication = function(req, res, next) {
+const router = express.Router();
+const utils = require('../utils/utils');
+
+function requireAuthentication(req, res, next) {
   if (!req.session.user) {
     utils.sendErrorResponse(res, 403, 'Not logged in.');
   } else {
     next();
   }
-};
+}
 
-module.exports = function(connection) {
+module.exports = (connection) => {
   router.all('*', requireAuthentication);
 
   // Get people
   // GET /people
-  router.get('/', function(req, res) {
-    const sql = "SELECT * FROM people;";
-    connection.query(sql, function (err, rows, fields) {
+  router.get('/', (req, res) => {
+    const sql = 'SELECT * FROM people;';
+    connection.query(sql, (err, rows) => {
       if (err) {
         utils.sendErrorResponse(res, 500, err);
       } else {
@@ -28,13 +29,13 @@ module.exports = function(connection) {
 
   // Create person
   // POST /people
-  router.post('/', function(req, res) {
+  router.post('/', (req, res) => {
     const person = {
       firstname: req.body.firstname,
-      lastname: req.body.lastname
+      lastname: req.body.lastname,
     };
-    const sql = "INSERT INTO people SET ?";
-    connection.query(sql, person, function(err, result) {
+    const sql = 'INSERT INTO people SET ?';
+    connection.query(sql, person, (err, result) => {
       if (err) {
         utils.sendErrorResponse(res, 500, err);
       } else {
@@ -45,10 +46,10 @@ module.exports = function(connection) {
 
   // Delete person
   // DELETE /people
-  router.delete('/:id', function(req, res) {
-    const id = req.params.id;
-    var sql = "DELETE FROM people WHERE id = ?";
-    connection.query(sql, id, function (err, result) {
+  router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM people WHERE id = ?';
+    connection.query(sql, id, (err, result) => {
       if (err) {
         utils.sendErrorResponse(res, 500, err);
       } else {
@@ -58,4 +59,4 @@ module.exports = function(connection) {
   });
 
   return router;
-}
+};

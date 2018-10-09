@@ -1,13 +1,13 @@
 // import services
-import people from "./people.js";
-import accounts from "./accounts.js";
-import votes from "./votes.js";
-import comments from "./comments.js";
+import people from './people';
+import accounts from './accounts';
+import votes from './votes';
+import comments from './comments';
 
 // put services below
 export default {
-  people: people,
-  accounts: accounts,
-  votes: votes,
-  comments: comments
-}
+  people,
+  accounts,
+  votes,
+  comments,
+};
