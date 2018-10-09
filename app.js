@@ -18,11 +18,7 @@ try {
   };
 }
 
-const connection = mysql.createConnection(credentials);
-// keep the connection alive
-setInterval(() => {
-  connection.query('SELECT 1');
-}, 5000);
+const connection = mysql.createPool(credentials);
 
 // Require routes
 const users = require('./routes/users')(connection);
